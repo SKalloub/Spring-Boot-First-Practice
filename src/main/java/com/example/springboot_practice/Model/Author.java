@@ -2,10 +2,7 @@ package com.example.springboot_practice.Model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +14,14 @@ import java.util.List;
 @Table(name = "author")
 public class Author {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int authorId;
+    @Column
     private String name;
- //   private List<Book> bookList;
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<Book> bookList;
     public Author(int id, String name) {
-        this.id = id;
+        this.authorId = id;
         this.name = name;
     //    bookList = new ArrayList<>();
     }

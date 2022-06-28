@@ -2,9 +2,7 @@ package com.example.springboot_practice.Model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +15,9 @@ public class Book {
     private int isbn;
     @Column
     private String name;
-    //private Author author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "authorId", nullable = false)
+    private Author author;
     @Column
     private boolean reserved;
   //  private Customer customer;
