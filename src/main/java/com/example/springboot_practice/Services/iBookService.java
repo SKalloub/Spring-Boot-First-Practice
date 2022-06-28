@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface iBookService {
     public List<Book> getAllBooks();
     public Optional<Book> getBookById(int id);
-    public Book addBook(Book b);
-
+    public Book addBook(Book b, int authorID);
+    public Book reserveBook(int bid, int cid);
 }

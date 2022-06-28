@@ -29,22 +29,22 @@ public class BookController {
             return bookService.getBookById(id);
     }
 
-    @PostMapping()
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        Book book1 = bookService.addBook(book);
+    @PostMapping("/authors/{authorid}")
+    public ResponseEntity<Book> addBook(@RequestBody Book book, @PathVariable(name = "authorid") int aid) {
+        Book book1 = bookService.addBook(book, aid);
         if (book1!=null)
             return new ResponseEntity<>(book1, HttpStatus.OK);
         else
             return new ResponseEntity<>(book1, HttpStatus.BAD_REQUEST);
     }
-//    @PostMapping("/{bookID}/{customerID}")
-//    public ResponseEntity<Boolean> reserveBook(@PathVariable(name="bookID") int bookID, @PathVariable(name = "customerID") int customerID) {
-//        boolean status = bookService.reserveBook(customerID,bookID);
-//        if (status)
-//            return new ResponseEntity<>(status, HttpStatus.OK);
-//        else
-//            return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
-//    }
+    @PostMapping("/{bookID}/{customerID}")
+    public ResponseEntity<Book> reserveBook(@PathVariable(name="bookID") int bookID, @PathVariable(name = "customerID") int customerID) {
+        Book b = bookService.reserveBook(bookID,customerID);
+        if (b!=null)
+            return new ResponseEntity<>(b, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(b, HttpStatus.BAD_REQUEST);
+    }
 //    @DeleteMapping("/{bookID}/{customerID}")
 //    public ResponseEntity<Boolean> returnBook(@PathVariable(name = "bookID") int bookID, @PathVariable(name = "customerID") int customerID) {
 //        boolean status = bookService.returnBook(customerID,bookID);

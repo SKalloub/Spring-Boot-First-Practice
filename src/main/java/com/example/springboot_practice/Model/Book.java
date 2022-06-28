@@ -15,12 +15,14 @@ public class Book {
     private int isbn;
     @Column
     private String name;
-            @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authorId", nullable = false)
     private Author author;
     @Column
     private boolean reserved;
-  //  private Customer customer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerID",nullable = true)
+    private Customer customer;
 
     public Book(int id, int isbn, String name) {
         this.id = id;

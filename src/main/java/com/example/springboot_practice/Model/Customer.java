@@ -2,9 +2,7 @@ package com.example.springboot_practice.Model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @NoArgsConstructor
@@ -12,14 +10,16 @@ import java.util.List;
 @Entity
 public class Customer {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int customerID;
     @Column
     private String name;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Book> books;
 
     public Customer(int id, String name){
-        this.id = id;
+        this.customerID = id;
         this.name = name;
        // books = new ArrayList<>();
     }
- //   private List<Book> books;
 }

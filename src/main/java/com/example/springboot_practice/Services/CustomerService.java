@@ -1,6 +1,8 @@
 package com.example.springboot_practice.Services;
 
+import com.example.springboot_practice.Model.Book;
 import com.example.springboot_practice.Model.Customer;
+import com.example.springboot_practice.Repositories.BookRepository;
 import com.example.springboot_practice.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.Optional;
 public class CustomerService implements iCustomerService {
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    BookRepository bookRepository;
     @Override
    public Optional<Customer> getCustomerById(int id) {
         return customerRepository.findById(id);
@@ -20,11 +24,16 @@ public class CustomerService implements iCustomerService {
    public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
-   /*
+
     public Customer getCustomerByBookId(int id) {
-        return customerRepository.getCustomerByBookId(id);
-    }
-    */
+        Book b = bookRepository.findById(id).orElse(null);
+        if (b==null)
+            return null;
+
+        List<Customer> customers = customerRepository.findAll();
+        Customer c = customers.stream().filter(customer -> id== customer.getBooks().stream().filter(book -> book.getId()==id).findFirst().orElse(null).getId()).findFirst().orElse(null);
+        return c;}
+
    @Override
     public Customer addCustomer(Customer customer) {
         return customerRepository.save(customer);
