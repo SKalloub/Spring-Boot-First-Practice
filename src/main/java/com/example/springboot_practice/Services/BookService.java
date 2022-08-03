@@ -1,8 +1,9 @@
 package com.example.springboot_practice.Services;
 
+import com.example.springboot_practice.Exceptions.ResourceNotFoundException;
 import com.example.springboot_practice.Model.Author;
 import com.example.springboot_practice.Model.Book;
-import com.example.springboot_practice.Model.Customer;
+import com.example.springboot_practice.Payload.BookDTO;
 import com.example.springboot_practice.Repositories.AuthorRepository;
 import com.example.springboot_practice.Repositories.BookRepository;
 import com.example.springboot_practice.Repositories.CustomerRepository;
@@ -29,22 +30,32 @@ public class BookService implements iBookService{
     }
     @Override
     public List<Book> getAllBooks(){
+        System.err.println("Get All Books");
         return bookRepository.findAll();
     }
     @Override
-    public Book addBook(Book b, int authorID) {
+    public Book addBook(BookDTO b, int authorID) {
         Author author = authorRepository.findById(authorID).orElse(null);
-        b.setAuthor(author);
-        return bookRepository.save(b);
+        Book book = new Book(b.getIsbn(),b.getName());
+        book.setAuthor(author);
+        System.err.println(book.getId());
+        return bookRepository.save(book);
     }
 
+//    @Override
+//    public Book reserveBook(int bid, int cid) {
+//        Book book = bookRepository.findById(bid).orElse( null);
+//       Customer customer = customerRepository.findById(cid).orElse(null);
+//       book.setCustomer(customer);
+//       bookRepository.save(book);
+//       customerRepository.save(customer);
+//       return book;
+//    }
     @Override
-    public Book reserveBook(int bid, int cid) {
-        Book book = bookRepository.findById(bid).orElse( null);
-       Customer customer = customerRepository.findById(cid).orElse(null);
-       book.setCustomer(customer);
-       bookRepository.save(book);
-       customerRepository.save(customer);
-       return book;
+    public Book deleteBook(int bid) {
+        Book toBeDeleted = bookRepository.findById(bid).orElseThrow(() -> new ResourceNotFoundException());
+        bookRepository.delete(toBeDeleted);
+        return toBeDeleted;
     }
+
 }

@@ -20,7 +20,9 @@ public class AuthorController {
         return authorService.getAllAuthors();
     }
     @GetMapping("/{id}")
-    public Optional<Author> getAuthorById(@PathVariable(name="id") int id) {
+    public Optional<Author> getAuthorById(@PathVariable(name="id") int id) throws Exception {
+//        if (true)
+//        throw new IllegalArgumentException();
         return authorService.getAuthorById(id);
     }
     @PostMapping

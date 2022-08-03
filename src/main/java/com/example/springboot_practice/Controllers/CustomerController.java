@@ -1,6 +1,5 @@
 package com.example.springboot_practice.Controllers;
 
-import com.example.springboot_practice.Model.Book;
 import com.example.springboot_practice.Model.Customer;
 import com.example.springboot_practice.Services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;

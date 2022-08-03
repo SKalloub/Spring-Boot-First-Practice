@@ -1,9 +1,9 @@
 package com.example.springboot_practice.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +18,7 @@ public class Author {
     private int authorId;
     @Column
     private String name;
+    @JsonManagedReference(value="author")
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Book> bookList;
     public Author(int id, String name) {

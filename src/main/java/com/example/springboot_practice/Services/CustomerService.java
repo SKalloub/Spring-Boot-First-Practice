@@ -1,6 +1,5 @@
 package com.example.springboot_practice.Services;
 
-import com.example.springboot_practice.Model.Book;
 import com.example.springboot_practice.Model.Customer;
 import com.example.springboot_practice.Repositories.BookRepository;
 import com.example.springboot_practice.Repositories.CustomerRepository;
@@ -25,14 +24,17 @@ public class CustomerService implements iCustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer getCustomerByBookId(int id) {
-        Book b = bookRepository.findById(id).orElse(null);
-        if (b==null)
-            return null;
-
-        List<Customer> customers = customerRepository.findAll();
-        Customer c = customers.stream().filter(customer -> id== customer.getBooks().stream().filter(book -> book.getId()==id).findFirst().orElse(null).getId()).findFirst().orElse(null);
-        return c;}
+//    public Customer getCustomerByBookId(int id) {
+//        Book b = bookRepository.findById(id).orElse(null);
+//        if (b==null)
+//            return null;
+//
+//        List<Customer> customers = customerRepository.findAll();
+//        return customers.stream().filter(
+//                customer -> id == customer.getBooks().stream().filter(
+//                        book -> book.getId() == id).findFirst().
+//                        orElse(null).getId()).findFirst().orElse(null);
+//    }
 
    @Override
     public Customer addCustomer(Customer customer) {

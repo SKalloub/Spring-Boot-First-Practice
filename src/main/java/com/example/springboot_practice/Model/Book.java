@@ -1,28 +1,34 @@
 package com.example.springboot_practice.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Data
 @Entity
+@AllArgsConstructor
+@Table(name = "book")
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
     private int isbn;
     @Column
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "authorId", nullable = false)
+    @JsonBackReference(value = "author")
+    @JoinColumn(name = "authorId", nullable = false, referencedColumnName = "authorId")
     private Author author;
     @Column
     private boolean reserved;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerID",nullable = true)
-    private Customer customer;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonBackReference(value = "customer")
+//    @JoinColumn(name = "customerID")
+//    private Customer customer;
 
     public Book(int id, int isbn, String name) {
         this.id = id;
